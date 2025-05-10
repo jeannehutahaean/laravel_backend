@@ -1,22 +1,29 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Models;
 
-use Illuminate\Http\Request;
-use App\Models\Shipment;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 
-class ShipmentController extends Controller
+class ShipmentController extends Model
 {
-    public function start(Request $request)
+    use HasFactory;
+
+    // Tentukan kolom yang dapat diisi (fillable)
+    protected $fillable = [
+        'driver_id',
+        'vehicle_id',
+        'destination',
+        'start_time',
+        'estimated_arrival',
+        'goods_type',
+        'status',
+    ];
+
+    // Jika Anda memiliki relasi dengan model lain (misalnya, relasi dengan User untuk driver_id),
+    // Anda bisa menambahkannya di sini.
+    public function driver()
     {
-        return Shipment::create([
-            'driver_id' => auth()->id(),
-            'vehicle_id' => $request->vehicle_id,
-            'destination' => $request->destination,
-            'start_time' => now(),
-            'estimated_arrival' => $request->eta,
-            'goods_type' => $request->goods_type,
-            'status' => 'ongoing'
-        ]);
+        return $this->belongsTo(User::class, 'driver_id');
     }
 }
