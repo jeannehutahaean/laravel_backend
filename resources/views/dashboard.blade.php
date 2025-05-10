@@ -1,5 +1,7 @@
 @extends('layouts.main')
 
+<!-- komentar -->
+
 @section('content')
 <div class="container">
     <h2>Selamat Datang, {{ Auth::user()->name }}</h2>
