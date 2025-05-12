@@ -1,6 +1,6 @@
 @extends('layouts.main')
 
-<!-- komentar -->
+<!-- Jean Batak -->
 
 @section('content')
 <div class="container">
