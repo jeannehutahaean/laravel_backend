@@ -32,7 +32,7 @@
 
 <body class="index-page">
 
-  <!-- <header id="header" class="header d-flex align-items-center fixed-top">
+  <header id="header" class="header d-flex align-items-center fixed-top">
     <div class="container-fluid container-xl position-relative d-flex align-items-center justify-content-between">
 
       <a href="{{ route('home') }}" class="logo d-flex align-items-center">
@@ -51,13 +51,13 @@
       </nav>
 
     </div>
-  </header> -->
+  </header>
 
   <main class="main">
     @yield('content')
   </main>
 
-  <!-- <footer id="footer" class="footer dark-background">
+  <footer id="footer" class="footer dark-background">
     <div class="container">
       <h3 class="sitename">SoftLand</h3>
       <p>Et aut eum quis fuga eos sunt ipsa nihil. Labore corporis magni eligendi fuga maxime saepe commodi placeat.</p>
@@ -77,7 +77,7 @@
         </div>
       </div>
     </div>
-  </footer> -->
+  </footer>
 
   <!-- Scroll Top -->
   <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
