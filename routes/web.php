@@ -4,6 +4,9 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Admin\AuthController as AdminAuthController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\VehicleController;
+use App\Http\Controllers\Admin\ReportController;
+use App\Http\Controllers\Admin\NotificationController;
 
 // ========================
 // ADMIN ROUTES
@@ -15,10 +18,19 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::post('/login', [AdminAuthController::class, 'login'])->name('login.submit');
     });
 
-    // Admin Dashboard (hanya jika sudah login sebagai admin)
+    // Admin Protected Routes
     Route::middleware('auth:admin')->group(function () {
         Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
         Route::post('/logout', [AdminAuthController::class, 'logout'])->name('logout');
+
+        // Manajemen Kendaraan & Rute
+        Route::resource('vehicles', VehicleController::class);
+
+        // Laporan Performa Pengiriman
+        Route::get('/reports', [ReportController::class, 'index'])->name('reports');
+
+        // Notifikasi Keterlambatan / Penyimpangan
+        Route::get('/notifications', [NotificationController::class, 'index'])->name('notifications');
     });
 });
 

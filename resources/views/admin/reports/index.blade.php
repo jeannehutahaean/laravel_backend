@@ -1,12 +1,14 @@
 @extends('admin.layouts.app')
 
-@section('title', 'Laporan Performa')
+@section('title', 'Laporan Performa Pengiriman')
 
 @section('content')
     <h1>Laporan Performa Pengiriman</h1>
+
     <ul>
-        <li>Tepat waktu: {{ $report['on_time'] }}</li>
-        <li>Terlambat: {{ $report['delayed'] }}</li>
-        <li>Rata-rata Waktu: {{ $report['average_time'] }} menit</li>
+        <li>Total Pengiriman: {{ $totalShipments }}</li>
+        <li>Tepat Waktu: {{ $onTime }}</li>
+        <li>Terlambat: {{ $late }}</li>
+        <li>Rata-rata Waktu Pengiriman: {{ round($avgDeliveryTime, 2) }} menit</li>
     </ul>
 @endsection
