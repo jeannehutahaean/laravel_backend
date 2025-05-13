@@ -11,12 +11,13 @@ class DashboardController extends Controller
 {
     public function index()
     {
+        // Statistik pengiriman
         $vehicleCount = Vehicle::count();
         $ongoingShipments = Shipment::where('status', 'ongoing')->count();
         $completedShipments = Shipment::where('status', 'completed')->count();
         $delayedShipments = Shipment::where('status', 'delayed')->count();
 
-        // Tambahkan query ini untuk menampilkan data real-time di dashboard
+        // Data pengiriman untuk peta + tabel
         $shipments = Shipment::with(['driver', 'vehicle', 'latestTracking'])->get();
 
         return view('admin.dashboard', compact(
@@ -24,7 +25,7 @@ class DashboardController extends Controller
             'ongoingShipments',
             'completedShipments',
             'delayedShipments',
-            'shipments' // Pastikan dikirim ke view
+            'shipments'
         ));
     }
 }

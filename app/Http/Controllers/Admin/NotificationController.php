@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
@@ -8,11 +9,18 @@ class NotificationController extends Controller
 {
     public function index()
     {
-        $notifications = [
-            ['message' => 'Kendaraan A terlambat 15 menit', 'time' => now()],
-            ['message' => 'Kendaraan B menyimpang dari rute', 'time' => now()],
-        ];
+        // Dummy data dalam bentuk object
+        $notifications = collect([
+            (object)[
+                'message' => 'Kendaraan A terlambat 30 menit',
+                'created_at' => now()->subMinutes(15),
+            ],
+            (object)[
+                'message' => 'Kendaraan B menyimpang dari rute yang ditentukan',
+                'created_at' => now()->subHour(),
+            ],
+        ]);
 
-        return view('admin.notifications', compact('notifications'));
+        return view('admin.notifications.index', compact('notifications'));
     }
 }
