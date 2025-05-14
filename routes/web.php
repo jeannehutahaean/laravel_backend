@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\VehicleController;
 use App\Http\Controllers\Admin\ReportController;
 use App\Http\Controllers\Admin\NotificationController;
+use App\Http\Controllers\Admin\RouteController; 
 
 // ========================
 // ADMIN ROUTES
@@ -23,8 +24,11 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
         Route::post('/logout', [AdminAuthController::class, 'logout'])->name('logout');
 
-        // Manajemen Kendaraan & Rute
+        // Manajemen Kendaraan
         Route::resource('vehicles', VehicleController::class);
+
+        //  Manajemen Rute (terintegrasi dengan peta)
+        Route::resource('routes', RouteController::class)->names('routes');
 
         // Laporan Performa Pengiriman
         Route::get('/reports', [ReportController::class, 'index'])->name('reports');

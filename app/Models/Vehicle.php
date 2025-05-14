@@ -14,6 +14,9 @@ class Vehicle extends Model
         'model',
     ];
 
+    // Nonaktifkan created_at dan updated_at
+    public $timestamps = false;
+
     public function shipments()
     {
         return $this->hasMany(Shipment::class);

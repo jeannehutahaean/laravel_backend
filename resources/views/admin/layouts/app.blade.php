@@ -47,8 +47,12 @@
                     <a class="nav-link {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}" href="{{ route('admin.dashboard') }}">Dashboard</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link {{ request()->routeIs('admin.vehicles.*') ? 'active' : '' }}" href="{{ route('admin.vehicles.index') }}">Kendaraan & Rute</a>
+                    <a class="nav-link {{ request()->routeIs('admin.vehicles.*') ? 'active' : '' }}" href="{{ route('admin.vehicles.index') }}">Kendaraan</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link {{ request()->routeIs('admin.routes.*') ? 'active' : '' }}" href="{{ route('admin.routes.index') }}">Rute</a>
+                </li>
+
                 <li class="nav-item">
                     <a class="nav-link {{ request()->routeIs('admin.reports') ? 'active' : '' }}" href="{{ route('admin.reports') }}">Laporan</a>
                 </li>
