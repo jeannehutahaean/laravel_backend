@@ -3,7 +3,8 @@
 @section('title', 'Dashboard')
 
 @section('content')
-    <h1>Dashboard Monitoring</h1>
+    <h1 class="text-center text-2xl font-bold">Dashboard Monitoring</h1>
+    <div class="my-4"></div>
 
     <div class="row">
         <div class="col-md-12">
