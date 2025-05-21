@@ -64,12 +64,18 @@
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
                             <div class="flex space-x-2">
-                                <a href="{{ route('admin.vehicles.edit', $vehicle->id) }}"
-                                   class="inline-flex items-center px-3 py-1 border border-yellow-500 rounded-md shadow-sm text-sm font-medium text-yellow-700 bg-yellow-100 hover:bg-yellow-200 focus:outline-none">
+                                <button onclick="showEditModal('{{ $vehicle->id }}')"
+                                   class="inline-flex items-center px-3 py-1.5 rounded-md shadow-sm text-sm font-medium text-white bg-yellow-600 hover:bg-yellow-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500 transition-colors">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                                    </svg>
                                     Edit
-                                </a>
+                                </button>
                                 <button onclick="showDeleteModal('{{ $vehicle->id }}')"
-                                        class="inline-flex items-center px-3 py-1 border border-red-500 rounded-md shadow-sm text-sm font-medium text-red-700 bg-red-100 hover:bg-red-200 focus:outline-none">
+                                        class="inline-flex items-center px-3 py-1.5 rounded-md shadow-sm text-sm font-medium text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 transition-colors">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                                    </svg>
                                     Hapus
                                 </button>
                             </div>
@@ -82,38 +88,105 @@
     </div>
 </div>
 
+<!-- Edit Confirmation Modal -->
+<div id="editModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50">
+    <div class="bg-white rounded-lg border border-gray-200 p-6 w-full max-w-md mx-4 transform transition-all duration-300 ease-out opacity-0 scale-95" id="editModalContent">
+        <div class="text-center">
+            <h3 class="text-xl font-semibold text-gray-800 mb-2">Konfirmasi Edit</h3>
+            <p class="mb-6 text-gray-600">Apakah Anda yakin ingin mengedit jadwal kendaraan ini?</p>
+            <div class="flex justify-center space-x-4">
+                <button onclick="hideEditModal()"
+                        class="px-6 py-2 text-gray-700 bg-white hover:bg-gray-100 rounded-md border border-gray-300 focus:outline-none transition-colors duration-200 hover:scale-105 transform">
+                    Tidak
+                </button>
+                <a id="editConfirmLink" href="#"
+                   class="px-6 py-2 text-white bg-yellow-600 hover:bg-yellow-700 rounded-md focus:outline-none transition-colors duration-200 hover:scale-105 transform">
+                    Ya, Edit
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
 <!-- Delete Confirmation Modal -->
 <div id="deleteModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50">
-    <div class="bg-white rounded-lg border-2 border-gray-200 p-6 max-w-sm w-full mx-4">
-        <h3 class="text-lg font-semibold text-gray-800 mb-4">Konfirmasi Hapus</h3>
-        <p class="mb-6 text-gray-600">Apakah Anda yakin ingin menghapus kendaraan ini?</p>
-        <div class="flex justify-end space-x-3">
-            <button onclick="hideDeleteModal()"
-                    class="px-4 py-2 border border-gray-300 rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none">
-                Tidak
-            </button>
-            <form id="deleteForm" method="POST" class="inline">
-                @csrf
-                @method('DELETE')
-                <button type="submit"
-                        class="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 focus:outline-none">
-                    Ya, Hapus
+    <div class="bg-white rounded-lg border border-gray-200 p-6 w-full max-w-md mx-4 transform transition-all duration-300 ease-out opacity-0 scale-95" id="modalContent">
+        <div class="text-center">
+            <h3 class="text-xl font-semibold text-gray-800 mb-2">Konfirmasi Penghapusan</h3>
+            <p class="mb-6 text-gray-600">Apakah Anda yakin ingin menghapus kendaraan ini? Tindakan ini tidak dapat dibatalkan.</p>
+            <div class="flex justify-center space-x-4">
+                <button onclick="hideDeleteModal()"
+                        class="px-6 py-2 text-gray-700 bg-white hover:bg-gray-100 rounded-md border border-gray-300 focus:outline-none transition-colors duration-200 hover:scale-105 transform">
+                    Tidak
                 </button>
-            </form>
+                <form id="deleteForm" method="POST" class="inline">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit"
+                            class="px-6 py-2 text-white bg-red-600 hover:bg-red-700 rounded-md focus:outline-none transition-colors duration-200 hover:scale-105 transform">
+                        Ya, Hapus
+                    </button>
+                </form>
+            </div>
         </div>
     </div>
 </div>
 
 <script>
+    function showEditModal(vehicleId) {
+        const modal = document.getElementById('editModal');
+        const modalContent = document.getElementById('editModalContent');
+        const editLink = document.getElementById('editConfirmLink');
+        
+        editLink.href = `/admin/vehicles/${vehicleId}/edit`;
+        modal.classList.remove('hidden');
+        
+        // Trigger reflow to restart animation
+        void modalContent.offsetWidth;
+        
+        modalContent.classList.remove('opacity-0', 'scale-95');
+        modalContent.classList.add('opacity-100', 'scale-100');
+    }
+
+    function hideEditModal() {
+        const modal = document.getElementById('editModal');
+        const modalContent = document.getElementById('editModalContent');
+        
+        modalContent.classList.remove('opacity-100', 'scale-100');
+        modalContent.classList.add('opacity-0', 'scale-95');
+        
+        // Wait for animation to finish before hiding
+        setTimeout(() => {
+            modal.classList.add('hidden');
+        }, 300);
+    }
+
     function showDeleteModal(vehicleId) {
         const modal = document.getElementById('deleteModal');
+        const modalContent = document.getElementById('modalContent');
         const form = document.getElementById('deleteForm');
+        
         form.action = `/admin/vehicles/${vehicleId}`;
         modal.classList.remove('hidden');
+        
+        // Trigger reflow to restart animation
+        void modalContent.offsetWidth;
+        
+        modalContent.classList.remove('opacity-0', 'scale-95');
+        modalContent.classList.add('opacity-100', 'scale-100');
     }
 
     function hideDeleteModal() {
-        document.getElementById('deleteModal').classList.add('hidden');
+        const modal = document.getElementById('deleteModal');
+        const modalContent = document.getElementById('modalContent');
+        
+        modalContent.classList.remove('opacity-100', 'scale-100');
+        modalContent.classList.add('opacity-0', 'scale-95');
+        
+        // Wait for animation to finish before hiding
+        setTimeout(() => {
+            modal.classList.add('hidden');
+        }, 300);
     }
 </script>
 @endsection
