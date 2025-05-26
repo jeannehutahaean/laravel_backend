@@ -3,20 +3,32 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+use Carbon\Carbon;
 
 class NotificationController extends Controller
 {
     public function index()
     {
-        // Dummy data dalam bentuk object
+        // Data notifikasi dengan struktur yang sederhana dan sesuai
         $notifications = collect([
             (object)[
-                'message' => 'Kendaraan A terlambat 30 menit',
+                'id' => 1,
+                'order_id' => 'ORD-001',
+                'driver_name' => 'John Doe',
+                'departure_time' => Carbon::now()->subHours(3),
+                'planned_time' => Carbon::now()->subHours(2),
+                'last_position' => 'Jl. Sudirman KM 5',
+                'status' => 'late',
                 'created_at' => now()->subMinutes(15),
             ],
             (object)[
-                'message' => 'Kendaraan B menyimpang dari rute yang ditentukan',
+                'id' => 2,
+                'order_id' => 'ORD-002',
+                'driver_name' => 'Jane Smith',
+                'departure_time' => Carbon::now()->subHours(5),
+                'planned_time' => Carbon::now()->subHours(4),
+                'last_position' => 'Jl. Thamrin KM 3',
+                'status' => 'deviation',
                 'created_at' => now()->subHour(),
             ],
         ]);
