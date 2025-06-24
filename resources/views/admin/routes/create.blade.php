@@ -1,61 +1,40 @@
-{{-- resources/views/admin/routes/create.blade.php --}}
-@extends('layouts.app')
+@extends('admin.layouts.app')
 
 @section('content')
-<div class="container">
-    <h2>Tambah Rute</h2>
+<div class="container mx-auto p-4">
+    <h1 class="text-2xl font-bold mb-4">Tambah Rute</h1>
+
     <form method="POST" action="{{ route('admin.routes.store') }}">
         @csrf
-        <div class="mb-3">
-            <label>Nama Lokasi</label>
-            <input type="text" id="location_name" name="location_name" class="form-control" readonly required>
+        <div class="mb-4">
+            <label class="block font-medium mb-1">Shipment ID</label>
+            <input type="number" name="shipment_id" required class="w-full border p-2 rounded">
         </div>
-        <div class="mb-3">
-            <label>Latitude</label>
-            <input type="text" id="latitude" name="latitude" class="form-control" readonly required>
+
+        <div class="mb-4">
+            <label class="block font-medium mb-1">Nama Lokasi</label>
+            <input type="text" name="location_name" required class="w-full border p-2 rounded">
         </div>
-        <div class="mb-3">
-            <label>Longitude</label>
-            <input type="text" id="longitude" name="longitude" class="form-control" readonly required>
+
+        <div class="mb-4">
+            <label class="block font-medium mb-1">Urutan Rute (1 = A, 2 = B...)</label>
+            <input type="number" name="route_order" required class="w-full border p-2 rounded">
         </div>
-        <div class="mb-3">
-            <label>Urutan Rute</label>
-            <input type="number" name="route_order" class="form-control" required>
+
+        <input type="hidden" name="latitude" id="latitude">
+        <input type="hidden" name="longitude" id="longitude">
+
+        <div class="mb-4">
+            <label class="block font-medium mb-1">Pilih Lokasi di Peta</label>
+            <div id="map" class="w-full h-96 border rounded"></div>
         </div>
-        <div id="map" style="height: 400px;"></div>
-        <button type="submit" class="btn btn-primary mt-3">Simpan</button>
+
+        <button class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">
+            Simpan
+        </button>
     </form>
 </div>
-@endsection
 
-@section('scripts')
-<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
-<link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
-<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-<script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
-<script>
-    var map = L.map('map').setView([-6.914744, 107.609810], 10); // Bandung
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        maxZoom: 19,
-    }).addTo(map);
-
-    var marker;
-    var geocoder = L.Control.geocoder({
-        defaultMarkGeocode: false
-    })
-    .on('markgeocode', function(e) {
-        var latlng = e.geocode.center;
-        var name = e.geocode.name;
-
-        if (marker) map.removeLayer(marker);
-        marker = L.marker(latlng).addTo(map);
-
-        document.getElementById('latitude').value = latlng.lat;
-        document.getElementById('longitude').value = latlng.lng;
-        document.getElementById('location_name').value = name;
-
-        map.setView(latlng, 15);
-    })
-    .addTo(map);
-</script>
+{{-- Include script peta --}}
+@include('admin.routes.map-script')
 @endsection

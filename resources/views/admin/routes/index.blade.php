@@ -1,35 +1,46 @@
 @extends('admin.layouts.app')
 
 @section('content')
-<div class="container mt-4">
-    <h2>Daftar Rute Pengiriman</h2>
+<div class="container mx-auto p-4">
+    <h1 class="text-2xl font-bold mb-4">Daftar Rute</h1>
 
-    <div id="map" style="height: 500px; width: 100%;" class="my-4 rounded shadow"></div>
+    @if(session('success'))
+        <div class="bg-green-100 text-green-800 p-2 rounded mb-4">
+            {{ session('success') }}
+        </div>
+    @endif
 
-    <a href="{{ route('admin.routes.create') }}" class="btn btn-primary mb-3">+ Tambah Rute Baru</a>
+    <a href="{{ route('admin.routes.create') }}" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 mb-4 inline-block">
+        + Tambah Rute
+    </a>
 
-    <table class="table table-bordered">
+    <table class="w-full table-auto border">
         <thead>
-            <tr>
-                <th>ID</th>
-                <th>Latitude</th>
-                <th>Longitude</th>
-                <th>Waktu</th>
-                <th>Aksi</th>
+            <tr class="bg-gray-200">
+                <th class="p-2 border">ID</th>
+                <th class="p-2 border">Shipment ID</th>
+                <th class="p-2 border">Nama Lokasi</th>
+                <th class="p-2 border">Koordinat</th>
+                <th class="p-2 border">Urutan</th>
+                <th class="p-2 border">Aksi</th>
             </tr>
         </thead>
         <tbody>
-            @foreach ($routes as $route)
-            <tr>
-                <td>{{ $route->id }}</td>
-                <td>{{ $route->latitude }}</td>
-                <td>{{ $route->longitude }}</td>
-                <td>{{ $route->created_at }}</td>
-                <td>
-                    <a href="{{ route('admin.routes.edit', $route->id) }}" class="btn btn-sm btn-warning">Edit</a>
-                    <form action="{{ route('admin.routes.destroy', $route->id) }}" method="POST" class="d-inline">
-                        @csrf @method('DELETE')
-                        <button class="btn btn-sm btn-danger" onclick="return confirm('Hapus rute ini?')">Hapus</button>
+            @foreach($routes as $route)
+            <tr class="text-center">
+                <td class="border p-2">{{ $route->id }}</td>
+                <td class="border p-2">{{ $route->shipment_id }}</td>
+                <td class="border p-2">{{ $route->location_name }}</td>
+                <td class="border p-2">{{ $route->latitude }}, {{ $route->longitude }}</td>
+                <td class="border p-2">{{ chr(64 + $route->route_order) }}</td>
+                <td class="border p-2">
+                    <a href="{{ route('admin.routes.edit', $route->id) }}" class="text-blue-600 hover:underline">Edit</a> |
+                    <form method="POST" action="{{ route('admin.routes.destroy', $route->id) }}" class="inline">
+                        @csrf
+                        @method('DELETE')
+                        <button onclick="return confirm('Yakin ingin hapus?')" class="text-red-600 hover:underline">
+                            Hapus
+                        </button>
                     </form>
                 </td>
             </tr>
@@ -37,31 +48,4 @@
         </tbody>
     </table>
 </div>
-
-{{-- Include Leaflet --}}
-<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
-<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-
-<script>
-    const routes = @json($routes);
-    const map = L.map('map', {
-        scrollWheelZoom: false, // 🔧 nonaktifkan zoom saat scroll
-        zoomControl: true
-    }).setView([-6.914744, 107.609810], 6);
-
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '&copy; OpenStreetMap'
-    }).addTo(map);
-
-    routes.forEach(route => {
-        L.marker([route.latitude, route.longitude])
-            .addTo(map)
-            .bindPopup(`ID: ${route.id}<br>Waktu: ${route.created_at}`);
-    });
-
-    // 🔧 perbaikan ukuran saat map baru dimuat
-    setTimeout(() => {
-        map.invalidateSize();
-    }, 200);
-</script>
 @endsection

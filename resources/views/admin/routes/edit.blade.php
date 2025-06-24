@@ -1,54 +1,35 @@
-@extends('admin.layouts.app')
+@extends('layouts.app')
 
 @section('content')
-<div class="container mt-4">
-    <h2>Edit Rute</h2>
+<div class="container mx-auto p-4">
+    <h1 class="text-2xl font-bold mb-4">Edit Rute</h1>
 
-    <div id="map" style="height: 400px; width: 100%;" class="my-4 rounded shadow"></div>
-
-    <form action="{{ route('admin.routes.update', $route->id) }}" method="POST">
+    <form method="POST" action="{{ route('routes.update', $route->id) }}">
         @csrf @method('PUT')
+        <div class="mb-4">
+            <label>Shipment ID</label>
+            <input type="number" name="shipment_id" value="{{ $route->shipment_id }}" required class="w-full border p-2 rounded">
+        </div>
+        <div class="mb-4">
+            <label>Nama Lokasi</label>
+            <input type="text" name="location_name" value="{{ $route->location_name }}" required class="w-full border p-2 rounded">
+        </div>
+        <div class="mb-4">
+            <label>Urutan Rute</label>
+            <input type="number" name="route_order" value="{{ $route->route_order }}" required class="w-full border p-2 rounded">
+        </div>
 
-        <div class="mb-3">
-            <label class="form-label">Latitude</label>
-            <input type="text" name="latitude" id="latitude" class="form-control" value="{{ $route->latitude }}" readonly>
+        <input type="hidden" name="latitude" id="latitude" value="{{ $route->latitude }}">
+        <input type="hidden" name="longitude" id="longitude" value="{{ $route->longitude }}">
+
+        <div class="mb-4">
+            <label>Pilih Lokasi di Peta</label>
+            <div id="map" class="w-full h-96 border rounded"></div>
         </div>
-        <div class="mb-3">
-            <label class="form-label">Longitude</label>
-            <input type="text" name="longitude" id="longitude" class="form-control" value="{{ $route->longitude }}" readonly>
-        </div>
-        <div class="mb-3">
-            <label class="form-label">Waktu (timestamp)</label>
-            <input type="datetime-local" name="timestamp" class="form-control" value="{{ \Carbon\Carbon::parse($route->timestamp)->format('Y-m-d\TH:i') }}" required>
-        </div>
-        <button class="btn btn-success">Update</button>
+
+        <button class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Update</button>
     </form>
 </div>
 
-{{-- Leaflet --}}
-<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
-<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-
-<script>
-    const lat = {{ $route->latitude }};
-    const lng = {{ $route->longitude }};
-
-    const map = L.map('map', { scrollWheelZoom: false }).setView([lat, lng], 8);
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { attribution: '&copy; OpenStreetMap' }).addTo(map);
-
-    let marker = L.marker([lat, lng]).addTo(map);
-
-    map.on('click', function(e) {
-        const newLat = e.latlng.lat.toFixed(7);
-        const newLng = e.latlng.lng.toFixed(7);
-
-        if (marker) map.removeLayer(marker);
-        marker = L.marker([newLat, newLng]).addTo(map);
-
-        document.getElementById('latitude').value = newLat;
-        document.getElementById('longitude').value = newLng;
-    });
-
-    setTimeout(() => map.invalidateSize(), 200);
-</script>
+@include('routes.map-script', ['lat' => $route->latitude, 'lng' => $route->longitude])
 @endsection
