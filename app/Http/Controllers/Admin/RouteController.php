@@ -1,15 +1,16 @@
 <?php
+// app/Http/Controllers/Admin/RouteController.php
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\RoutePoint;
+use App\Models\ShipmentRoute;
 use Illuminate\Http\Request;
 
 class RouteController extends Controller
 {
     public function index()
     {
-        $routes = RoutePoint::all();
+        $routes = ShipmentRoute::orderBy('route_order')->get();
         return view('admin.routes.index', compact('routes'));
     }
 
@@ -21,42 +22,53 @@ class RouteController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'shipment_id' => 'required|integer',
+            'location_name' => 'required|string|max:255',
             'latitude' => 'required|numeric',
             'longitude' => 'required|numeric',
-            'timestamp' => 'required|date',
+            'route_order' => 'required|integer',
         ]);
 
-        RoutePoint::create($request->all());
+        ShipmentRoute::create([
+            'shipment_id' => 1, // default sementara, ubah jika dinamis
+            'location_name' => $request->location_name,
+            'latitude' => $request->latitude,
+            'longitude' => $request->longitude,
+            'route_order' => $request->route_order,
+        ]);
 
         return redirect()->route('admin.routes.index')->with('success', 'Rute berhasil ditambahkan');
     }
 
     public function edit($id)
     {
-        $route = RoutePoint::findOrFail($id);
+        $route = ShipmentRoute::findOrFail($id);
         return view('admin.routes.edit', compact('route'));
     }
 
     public function update(Request $request, $id)
     {
-        $route = RoutePoint::findOrFail($id);
+        $route = ShipmentRoute::findOrFail($id);
 
         $request->validate([
-            'shipment_id' => 'required|integer',
+            'location_name' => 'required|string|max:255',
             'latitude' => 'required|numeric',
             'longitude' => 'required|numeric',
-            'timestamp' => 'required|date',
+            'route_order' => 'required|integer',
         ]);
 
-        $route->update($request->all());
+        $route->update([
+            'location_name' => $request->location_name,
+            'latitude' => $request->latitude,
+            'longitude' => $request->longitude,
+            'route_order' => $request->route_order,
+        ]);
 
         return redirect()->route('admin.routes.index')->with('success', 'Rute berhasil diperbarui');
     }
 
     public function destroy($id)
     {
-        RoutePoint::destroy($id);
+        ShipmentRoute::destroy($id);
         return redirect()->route('admin.routes.index')->with('success', 'Rute berhasil dihapus');
     }
 }

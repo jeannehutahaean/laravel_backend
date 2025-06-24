@@ -1,66 +1,54 @@
 @extends('admin.layouts.app')
 
-@section('title', 'Edit Rute')
-
 @section('content')
-<h1>Edit Rute</h1>
+<div class="container mt-4">
+    <h2>Edit Rute</h2>
 
-@if ($errors->any())
-    <div class="alert alert-danger">
-        <ul>@foreach ($errors->all() as $error)<li>{{ $error }}</li>@endforeach</ul>
-    </div>
-@endif
+    <div id="map" style="height: 400px; width: 100%;" class="my-4 rounded shadow"></div>
 
-<form method="POST" action="{{ route('admin.routes.update', $route->id) }}">
-    @csrf
-    @method('PUT')
+    <form action="{{ route('admin.routes.update', $route->id) }}" method="POST">
+        @csrf @method('PUT')
 
-    <div class="mb-3">
-        <label>Shipment ID</label>
-        <input type="number" name="shipment_id" class="form-control" value="{{ old('shipment_id', $route->shipment_id) }}" required>
-    </div>
-    <div class="mb-3">
-        <label>Latitude</label>
-        <input type="text" name="latitude" id="lat" class="form-control" value="{{ old('latitude', $route->latitude) }}" required readonly>
-    </div>
-    <div class="mb-3">
-        <label>Longitude</label>
-        <input type="text" name="longitude" id="lng" class="form-control" value="{{ old('longitude', $route->longitude) }}" required readonly>
-    </div>
-    <div class="mb-3">
-        <label>Timestamp</label>
-        <input type="datetime-local" name="timestamp" class="form-control"
-               value="{{ \Carbon\Carbon::parse($route->timestamp)->format('Y-m-d\TH:i') }}" required>
-    </div>
+        <div class="mb-3">
+            <label class="form-label">Latitude</label>
+            <input type="text" name="latitude" id="latitude" class="form-control" value="{{ $route->latitude }}" readonly>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Longitude</label>
+            <input type="text" name="longitude" id="longitude" class="form-control" value="{{ $route->longitude }}" readonly>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Waktu (timestamp)</label>
+            <input type="datetime-local" name="timestamp" class="form-control" value="{{ \Carbon\Carbon::parse($route->timestamp)->format('Y-m-d\TH:i') }}" required>
+        </div>
+        <button class="btn btn-success">Update</button>
+    </form>
+</div>
 
-    <div id="map" style="height: 400px;" class="mb-3"></div>
-
-    <button type="submit" class="btn btn-success">Simpan Perubahan</button>
-</form>
-@endsection
-
-@push('scripts')
+{{-- Leaflet --}}
 <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
 <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
 <script>
-    var lat = {{ $route->latitude }};
-    var lng = {{ $route->longitude }};
-    var map = L.map('map').setView([lat, lng], 13);
+    const lat = {{ $route->latitude }};
+    const lng = {{ $route->longitude }};
 
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+    const map = L.map('map', { scrollWheelZoom: false }).setView([lat, lng], 8);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { attribution: '&copy; OpenStreetMap' }).addTo(map);
 
-    var marker = L.marker([lat, lng], {draggable: true}).addTo(map);
-
-    marker.on('dragend', function(e) {
-        var position = marker.getLatLng();
-        document.getElementById('lat').value = position.lat.toFixed(6);
-        document.getElementById('lng').value = position.lng.toFixed(6);
-    });
+    let marker = L.marker([lat, lng]).addTo(map);
 
     map.on('click', function(e) {
-        marker.setLatLng(e.latlng);
-        document.getElementById('lat').value = e.latlng.lat.toFixed(6);
-        document.getElementById('lng').value = e.latlng.lng.toFixed(6);
+        const newLat = e.latlng.lat.toFixed(7);
+        const newLng = e.latlng.lng.toFixed(7);
+
+        if (marker) map.removeLayer(marker);
+        marker = L.marker([newLat, newLng]).addTo(map);
+
+        document.getElementById('latitude').value = newLat;
+        document.getElementById('longitude').value = newLng;
     });
+
+    setTimeout(() => map.invalidateSize(), 200);
 </script>
-@endpush
+@endsection
