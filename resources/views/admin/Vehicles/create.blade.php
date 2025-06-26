@@ -45,9 +45,9 @@
                                 class="block w-full px-4 py-2 border-2 border-gray-200 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500" 
                                 required>
                             <option value="" disabled selected>Pilih Model Kendaraan</option>
-                            <option value="Avanza">Avanza</option>
-                            <option value="Xenia">Xenia</option>
-                            <option value="Innova">Innova</option>
+                            <option value="Truck">Truck</option>
+                            <option value="SemiTruck">SemiTruck</option>
+                            <option value="Trailer">Trailer</option>
                             <option value="Fortuner">Fortuner</option>
                             <option value="Hiace">Hiace</option>
                         </select>

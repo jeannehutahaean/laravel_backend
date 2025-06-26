@@ -8,6 +8,6 @@ class HomeController extends Controller
 {
     public function index()
     {
-        return view('home');  // Gantilah dengan view yang sesuai untuk halaman home
+        return view('admin/dashboard');  // Gantilah dengan view yang sesuai untuk halaman home
     }
 }

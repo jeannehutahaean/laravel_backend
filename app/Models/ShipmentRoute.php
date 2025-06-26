@@ -19,5 +19,6 @@ class ShipmentRoute extends Model
         'route_order',
     ];
 
-    public $timestamps = true; // created_at digunakan
+    public $timestamps = false;
+
 }

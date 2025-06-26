@@ -20,4 +20,7 @@ class Admin extends Authenticatable
         'password',
         'remember_token',
     ];
+
+    // ⛔ WAJIB: Nonaktifkan timestamps
+    public $timestamps = false;
 }
