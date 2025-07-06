@@ -1,0 +1,60 @@
+[23-Jun-2025 09:50:56 Asia/Jakarta] PHP Warning:  require(/home/usikrent/public_html/public/../laravel_backend/vendor/autoload.php): Failed to open stream: No such file or directory in /home/usikrent/public_html/public/index.php on line 34
+[23-Jun-2025 09:50:56 Asia/Jakarta] PHP Warning:  require(/home/usikrent/public_html/public/../laravel_backend/vendor/autoload.php): Failed to open stream: No such file or directory in /home/usikrent/public_html/public/index.php on line 34
+[23-Jun-2025 09:50:56 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Failed opening required '/home/usikrent/public_html/public/../laravel_backend/vendor/autoload.php' (include_path='.:/opt/alt/php82/usr/share/pear:/opt/alt/php82/usr/share/php:/usr/share/pear:/usr/share/php') in /home/usikrent/public_html/public/index.php:34
+Stack trace:
+#0 {main}
+  thrown in /home/usikrent/public_html/public/index.php on line 34
+[23-Jun-2025 10:01:01 Asia/Jakarta] PHP Warning:  require(/home/usikrent/public_html/../laravel_backend/vendor/autoload.php): Failed to open stream: No such file or directory in /home/usikrent/public_html/index.php on line 34
+[23-Jun-2025 10:01:01 Asia/Jakarta] PHP Warning:  require(/home/usikrent/public_html/../laravel_backend/vendor/autoload.php): Failed to open stream: No such file or directory in /home/usikrent/public_html/index.php on line 34
+[23-Jun-2025 10:01:01 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Failed opening required '/home/usikrent/public_html/../laravel_backend/vendor/autoload.php' (include_path='.:/opt/alt/php82/usr/share/pear:/opt/alt/php82/usr/share/php:/usr/share/pear:/usr/share/php') in /home/usikrent/public_html/index.php:34
+Stack trace:
+#0 {main}
+  thrown in /home/usikrent/public_html/index.php on line 34
+[23-Jun-2025 10:01:14 Asia/Jakarta] PHP Warning:  require(/home/usikrent/public_html/../laravel_backend/vendor/autoload.php): Failed to open stream: No such file or directory in /home/usikrent/public_html/index.php on line 34
+[23-Jun-2025 10:01:14 Asia/Jakarta] PHP Warning:  require(/home/usikrent/public_html/../laravel_backend/vendor/autoload.php): Failed to open stream: No such file or directory in /home/usikrent/public_html/index.php on line 34
+[23-Jun-2025 10:01:14 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Failed opening required '/home/usikrent/public_html/../laravel_backend/vendor/autoload.php' (include_path='.:/opt/alt/php82/usr/share/pear:/opt/alt/php82/usr/share/php:/usr/share/pear:/usr/share/php') in /home/usikrent/public_html/index.php:34
+Stack trace:
+#0 {main}
+  thrown in /home/usikrent/public_html/index.php on line 34
+[23-Jun-2025 10:46:22 Asia/Jakarta] PHP Fatal error:  Uncaught mysqli_sql_exception: Access denied for user 'usikrent_stephanhth'@'localhost' (using password: YES) in /home/usikrent/public_html/test_db.php:2
+Stack trace:
+#0 /home/usikrent/public_html/test_db.php(2): mysqli->__construct()
+#1 {main}
+  thrown in /home/usikrent/public_html/test_db.php on line 2
+[23-Jun-2025 10:49:43 Asia/Jakarta] PHP Fatal error:  Uncaught mysqli_sql_exception: Access denied for user 'usikrent_stephanhth'@'localhost' (using password: YES) in /home/usikrent/public_html/test_db.php:2
+Stack trace:
+#0 /home/usikrent/public_html/test_db.php(2): mysqli->__construct()
+#1 {main}
+  thrown in /home/usikrent/public_html/test_db.php on line 2
+[24-Jun-2025 14:17:47 Asia/Jakarta] PHP Warning:  require(/home/usikrent/public_html/vendor/autoload.php): Failed to open stream: No such file or directory in /home/usikrent/public_html/clear.php on line 5
+[24-Jun-2025 14:17:47 Asia/Jakarta] PHP Warning:  require(/home/usikrent/public_html/vendor/autoload.php): Failed to open stream: No such file or directory in /home/usikrent/public_html/clear.php on line 5
+[24-Jun-2025 14:17:47 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Failed opening required '/home/usikrent/public_html/vendor/autoload.php' (include_path='.:/opt/alt/php82/usr/share/pear:/opt/alt/php82/usr/share/php:/usr/share/pear:/usr/share/php') in /home/usikrent/public_html/clear.php:5
+Stack trace:
+#0 {main}
+  thrown in /home/usikrent/public_html/clear.php on line 5
+[24-Jun-2025 14:22:03 Asia/Jakarta] PHP Warning:  require(/home/usikrent/public_html/vendor/autoload.php): Failed to open stream: No such file or directory in /home/usikrent/public_html/clear.php on line 5
+[24-Jun-2025 14:22:03 Asia/Jakarta] PHP Warning:  require(/home/usikrent/public_html/vendor/autoload.php): Failed to open stream: No such file or directory in /home/usikrent/public_html/clear.php on line 5
+[24-Jun-2025 14:22:03 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Failed opening required '/home/usikrent/public_html/vendor/autoload.php' (include_path='.:/opt/alt/php82/usr/share/pear:/opt/alt/php82/usr/share/php:/usr/share/pear:/usr/share/php') in /home/usikrent/public_html/clear.php:5
+Stack trace:
+#0 {main}
+  thrown in /home/usikrent/public_html/clear.php on line 5
+[24-Jun-2025 14:32:49 Asia/Jakarta] PHP Warning:  require(/home/usikrent/public_html/vendor/autoload.php): Failed to open stream: No such file or directory in /home/usikrent/public_html/clear.php on line 4
+[24-Jun-2025 14:32:49 Asia/Jakarta] PHP Warning:  require(/home/usikrent/public_html/vendor/autoload.php): Failed to open stream: No such file or directory in /home/usikrent/public_html/clear.php on line 4
+[24-Jun-2025 14:32:49 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Failed opening required '/home/usikrent/public_html/vendor/autoload.php' (include_path='.:/opt/alt/php82/usr/share/pear:/opt/alt/php82/usr/share/php:/usr/share/pear:/usr/share/php') in /home/usikrent/public_html/clear.php:4
+Stack trace:
+#0 {main}
+  thrown in /home/usikrent/public_html/clear.php on line 4
+[24-Jun-2025 16:33:07 Asia/Jakarta] PHP Warning:  require(/home/usikrent/public_html/laravel_backend/vendor/autoload.php): Failed to open stream: No such file or directory in /home/usikrent/public_html/index.php on line 34
+[24-Jun-2025 16:33:07 Asia/Jakarta] PHP Warning:  require(/home/usikrent/public_html/laravel_backend/vendor/autoload.php): Failed to open stream: No such file or directory in /home/usikrent/public_html/index.php on line 34
+[24-Jun-2025 16:33:07 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Failed opening required '/home/usikrent/public_html/laravel_backend/vendor/autoload.php' (include_path='.:/opt/alt/php82/usr/share/pear:/opt/alt/php82/usr/share/php:/usr/share/pear:/usr/share/php') in /home/usikrent/public_html/index.php:34
+Stack trace:
+#0 {main}
+  thrown in /home/usikrent/public_html/index.php on line 34
+[24-Jun-2025 16:33:51 Asia/Jakarta] PHP Warning:  require(/home/usikrent/public_html/laravel_backend/vendor/autoload.php): Failed to open stream: No such file or directory in /home/usikrent/public_html/index.php on line 34
+[24-Jun-2025 16:33:51 Asia/Jakarta] PHP Warning:  require(/home/usikrent/public_html/laravel_backend/vendor/autoload.php): Failed to open stream: No such file or directory in /home/usikrent/public_html/index.php on line 34
+[24-Jun-2025 16:33:51 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Failed opening required '/home/usikrent/public_html/laravel_backend/vendor/autoload.php' (include_path='.:/opt/alt/php82/usr/share/pear:/opt/alt/php82/usr/share/php:/usr/share/pear:/usr/share/php') in /home/usikrent/public_html/index.php:34
+Stack trace:
+#0 {main}
+  thrown in /home/usikrent/public_html/index.php on line 34
+[28-Jun-2025 02:00:02 UTC] PHP Warning:  Module "igbinary" is already loaded in Unknown on line 0
+[28-Jun-2025 02:00:02 UTC] PHP Warning:  PHP Startup: Unable to load dynamic library 'pdo_oci.so' (tried: /opt/alt/php82/usr/lib64/php/modules/pdo_oci.so (libclntsh.so.21.1: cannot open shared object file: No such file or directory), /opt/alt/php82/usr/lib64/php/modules/pdo_oci.so.so (/opt/alt/php82/usr/lib64/php/modules/pdo_oci.so.so: cannot open shared object file: No such file or directory)) in Unknown on line 0

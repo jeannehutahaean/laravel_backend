@@ -45,11 +45,10 @@
                                 class="block w-full px-4 py-2 border-2 border-gray-200 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500" 
                                 required>
                             <option value="" disabled selected>Pilih Model Kendaraan</option>
-                            <option value="Avanza">Avanza</option>
-                            <option value="Xenia">Xenia</option>
-                            <option value="Innova">Innova</option>
-                            <option value="Fortuner">Fortuner</option>
-                            <option value="Hiace">Hiace</option>
+                            <option value="Pick up">Pick up</option>
+                            <option value="Truck">Truck</option>
+                            <option value="Container">Container</option>
+                            <option value="Semi-Truck">Semi-Truck</option>
                         </select>
                         @error('model')
                             <p class="mt-1 text-sm text-red-600">{{ $message }}</p>

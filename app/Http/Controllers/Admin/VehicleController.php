@@ -49,6 +49,7 @@ class VehicleController extends Controller
 
     public function destroy(Vehicle $vehicle)
     {
+        
         $vehicle->delete();
 
         return redirect()->route('admin.vehicles.index')->with('success', 'Kendaraan berhasil dihapus');

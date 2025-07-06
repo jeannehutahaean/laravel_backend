@@ -40,7 +40,7 @@
             <a href="{{ route('admin.vehicles.index') }}" class="{{ request()->routeIs('admin.vehicles.*') ? 'bg-gray-300 text-black' : 'text-gray-700 hover:bg-gray-200 hover:text-black' }} px-3 py-2 rounded-md text-sm font-medium">Kendaraan</a>
             <a href="{{ route('admin.routes.index') }}" class="{{ request()->routeIs('admin.routes.*') ? 'bg-gray-300 text-black' : 'text-gray-700 hover:bg-gray-200 hover:text-black' }} px-3 py-2 rounded-md text-sm font-medium">Rute</a>
             <a href="{{ route('admin.reports') }}" class="{{ request()->routeIs('admin.reports') ? 'bg-gray-300 text-black' : 'text-gray-700 hover:bg-gray-200 hover:text-black' }} px-3 py-2 rounded-md text-sm font-medium">Laporan</a>
-            <a href="{{ route('admin.notifications') }}" class="{{ request()->routeIs('admin.notifications') ? 'bg-gray-300 text-black' : 'text-gray-700 hover:bg-gray-200 hover:text-black' }} px-3 py-2 rounded-md text-sm font-medium">Notifikasi</a>
+           <a href="{{ route('admin.notifications.index') }}" class="{{ request()->routeIs('admin.notifications.*') ? 'bg-gray-300 text-black' : 'text-gray-700 hover:bg-gray-200 hover:text-black' }} px-3 py-2 rounded-md text-sm font-medium">Notifikasi</a>
           </div>
         </div>
       </div>

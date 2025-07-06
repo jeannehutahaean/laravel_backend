@@ -18,10 +18,19 @@ return [
             'provider' => 'users',
         ],
 
-        // Tambahkan guard untuk admin
         'admin' => [
             'driver' => 'session',
             'provider' => 'admins',
+        ],
+
+        'driver' => [
+            'driver' => 'sanctum',
+            'provider' => 'drivers',
+        ],
+
+        'api' => [
+            'driver' => 'sanctum',
+            'provider' => 'users',
         ],
     ],
 
@@ -36,10 +45,14 @@ return [
             'model' => App\Models\User::class,
         ],
 
-        // Tambahkan provider untuk admin
         'admins' => [
             'driver' => 'eloquent',
             'model' => App\Models\Admin::class,
+        ],
+
+        'drivers' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Driver::class,
         ],
     ],
 
@@ -56,20 +69,21 @@ return [
             'throttle' => 60,
         ],
 
-        // Optional: reset password untuk admin, kalau mau buat fitur ini
         'admins' => [
             'provider' => 'admins',
             'table' => 'password_reset_tokens',
             'expire' => 60,
             'throttle' => 60,
         ],
+
+        'drivers' => [
+            'provider' => 'drivers',
+            'table' => 'password_reset_tokens',
+            'expire' => 60,
+            'throttle' => 60,
+        ],
     ],
 
-    /*
-    |--------------------------------------------------------------------------
-    | Password Confirmation Timeout
-    |--------------------------------------------------------------------------
-    */
     'password_timeout' => 10800,
 
 ];

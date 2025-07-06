@@ -19,9 +19,15 @@ return [
 
     'allowed_methods' => ['*'],
 
-    'allowed_origins' => ['*'],
-
-    'allowed_origins_patterns' => [],
+    'allowed_origins' => [
+      'capacitor://localhost',
+      'http://localhost',
+      'http://localhost:8100',
+      'https://localhost',
+      'https://usikrentcar.my.id',
+    ],
+    
+    'supports_credentials' => true,
 
     'allowed_headers' => ['*'],
 
@@ -30,5 +36,4 @@ return [
     'max_age' => 0,
 
     'supports_credentials' => false,
-
 ];

@@ -3,36 +3,73 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use Carbon\Carbon;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class NotificationController extends Controller
 {
     public function index()
     {
-        // Data notifikasi dengan struktur yang sederhana dan sesuai
-        $notifications = collect([
-            (object)[
-                'id' => 1,
-                'order_id' => 'ORD-001',
-                'driver_name' => 'John Doe',
-                'departure_time' => Carbon::now()->subHours(3),
-                'planned_time' => Carbon::now()->subHours(2),
-                'last_position' => 'Jl. Sudirman KM 5',
-                'status' => 'late',
-                'created_at' => now()->subMinutes(15),
-            ],
-            (object)[
-                'id' => 2,
-                'order_id' => 'ORD-002',
-                'driver_name' => 'Jane Smith',
-                'departure_time' => Carbon::now()->subHours(5),
-                'planned_time' => Carbon::now()->subHours(4),
-                'last_position' => 'Jl. Thamrin KM 3',
-                'status' => 'deviation',
-                'created_at' => now()->subHour(),
-            ],
-        ]);
+        // Statistik ringkasan
+        $totalShipments = DB::table('shipments')->count();
+        $inTransit = DB::table('shipments')->where('status_detail', 'active')->count();
+        $late = DB::table('shipments')
+            ->where('punctual_status', 'terlambat')
+            ->count();
 
-        return view('admin.notifications.index', compact('notifications'));
+        // Estimasi penyimpangan rute (jika current lokasi ≠ lokasi tujuan rute yang seharusnya)
+        $deviationCount = DB::table('shipments')
+            ->join('shipment_routes', 'shipments.shipment_route_id', '=', 'shipment_routes.id')
+            ->where(function ($query) {
+                $query->whereRaw('shipments.current_latitude IS NOT NULL')
+                    ->whereRaw('shipments.current_longitude IS NOT NULL')
+                    ->whereRaw('(ROUND(shipments.current_latitude, 4) != ROUND(shipment_routes.end_latitude, 4) OR ROUND(shipments.current_longitude, 4) != ROUND(shipment_routes.end_longitude, 4))');
+            })
+            ->count();
+
+        $summary = [
+            'total' => $totalShipments,
+            'in_transit' => $inTransit,
+            'late' => $late,
+            'deviation' => $deviationCount,
+        ];
+
+        // Notifikasi aktivitas shipment
+        $notifications = DB::table('shipments')
+            ->join('drivers', 'shipments.driver_id', '=', 'drivers.driver_id')
+            ->join('vehicles', 'shipments.vehicle_id', '=', 'vehicles.id')
+            ->leftJoin('shipment_routes', 'shipments.shipment_route_id', '=', 'shipment_routes.id')
+            ->select(
+                'shipments.id as order_id',
+                'shipments.start_time as departure_time',
+                'shipments.estimated_arrival as planned_time',
+                'shipments.status_detail',
+                'drivers.driver_name as driver_name',
+                'shipments.current_latitude as latitude',
+                'shipments.current_longitude as longitude',
+                'shipments.created_at',
+                DB::raw("'on_trip' as activity_status"),
+                DB::raw("CONCAT(shipments.current_latitude, ', ', shipments.current_longitude) as last_position"),
+                DB::raw("CASE 
+                    WHEN shipments.punctual_status = 'terlambat' THEN 'late'
+                    WHEN (shipments.current_latitude IS NOT NULL AND 
+                          (ROUND(shipments.current_latitude,4) != ROUND(shipment_routes.end_latitude,4) 
+                          OR ROUND(shipments.current_longitude,4) != ROUND(shipment_routes.end_longitude,4))) 
+                         THEN 'deviation'
+                    ELSE '' 
+                END AS status"),
+                DB::raw("CASE 
+                    WHEN shipments.punctual_status = 'terlambat' THEN 'Pengiriman mengalami keterlambatan'
+                    WHEN (shipments.current_latitude IS NOT NULL AND 
+                          (ROUND(shipments.current_latitude,4) != ROUND(shipment_routes.end_latitude,4) 
+                          OR ROUND(shipments.current_longitude,4) != ROUND(shipment_routes.end_longitude,4))) 
+                         THEN 'Penyimpangan dari rute yang ditentukan'
+                    ELSE NULL
+                END AS message")
+            )
+            ->orderByDesc('shipments.created_at')
+            ->get();
+
+        return view('admin.notifications.index', compact('summary', 'notifications'));
     }
 }
